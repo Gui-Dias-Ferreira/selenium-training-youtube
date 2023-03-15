@@ -1,21 +1,42 @@
 package ui;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LoginTest {
+	
+	/*
+	  WebDriver: interface principal para testes web, com essa interface ajuda
+	  a controlar o navegador, selecionar os elementos da página;
+	  Também ajuda na hora de instanciar diferentes drivers dos navegadores para teste.
+	  
+	 */
+	
+	public static String browser = "Firefox";
+	public static WebDriver driver;
 
 	public static void main(String[] args) {
+		
+		if(browser.equals("Chrome")) {
+			WebDriverManager.chromedriver().setup();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--remote-allow-origins=*");
+			
+			driver = new ChromeDriver(options);
+			
+		} else if (browser.equals("Firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		}
 
-		WebDriverManager.chromedriver().setup();
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--remote-allow-origins=*");
 		
 //		Abrindo o navegador
-		ChromeDriver driver = new ChromeDriver(options);
+//		ChromeDriver driver = new ChromeDriver(options);
 		driver.get("https://www.saucedemo.com/");
 		
 //		Preenchendo os inputs
